@@ -32,7 +32,7 @@ loadjs.ready(['promise','fetch'], function () {
 	loadjs([
 		'//cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js'
 		,'//cdn.jsdelivr.net/npm/signals@1.0.0/dist/signals.min.js'
-		//, '//cdn.jsdelivr.net/npm/riot@3.9.1/riot.js'
+		, '//cdn.jsdelivr.net/npm/riot@3.9.1/riot.js'
 	], 'core' /* bundle ID */, {
 		async: false //required due to loadjs bug with bundles
 	})
