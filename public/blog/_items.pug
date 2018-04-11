@@ -22,8 +22,6 @@ script.
 	loadjs.ready(['tag','items'], function() {
 		console.log('dbind')
 
-		//let itemsTag = riot.mount('items-tag')[0] // the first tag
-
 		$('#pgs').pagination({
 			dataSource: feed.items,
 			pageSize: 3,
@@ -31,10 +29,9 @@ script.
 			showNavigator: true,
 
 			callback: function(data, pagination) {
-				//itemsTag.renderItems(data)
 				var paginationWrapper = $('#pgs');
 				var dataContainer = $('.data-container', paginationWrapper);
-				var html = itemsTagTemplate({items: data})
+				var html = itemsPTemplate({items: data})
 				dataContainer.html(html);
 				myfunc()
 			}//cb
@@ -44,8 +41,7 @@ script.
 	loadjs.ready('site', function() {
 		loadjs([
 			'//cdn.jsdelivr.net/npm/moment@2.22.0/min/moment.min.js'
-		//, 'items-tag.js'
-		, 'items_tag.js' //pug -c --name-after-file blog/items_tag.pug -D
+		, 'items_p.js' //pug -c public/blog/items_p.pug --name-after-file -D
 		, '//cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js'
 		, '//cdn.jsdelivr.net/npm/paginationjs@2.1.2/dist/pagination.min.js'
 		, '//cdn.jsdelivr.net/npm/paginationjs@2.1.2/dist/pagination.css'

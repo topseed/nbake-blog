@@ -1,5 +1,3 @@
-//-items-tag
-	//-<virtual each={ items}>
 each item in items
 
 	a(href='#{item.local_url}', target='_blank')
@@ -19,14 +17,3 @@ script.
 	function myfunc(){
 		console.log('myfunc')
 	}
-
-//-script.
-	console.log('items tag')
-	this.items = []
-
-	renderItems(args) { //called by page on new data
-		console.log('first row '+ JSON.stringify(args[0]))
-		this.items = args
-		this.update()
-	}
-
