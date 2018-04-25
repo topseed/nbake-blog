@@ -31,7 +31,7 @@ script.
 			callback: function(data, pagination) {
 				var paginationWrapper = $('#pgs');
 				var dataContainer = $('.data-container', paginationWrapper);
-				var html = itemsPTemplate({items: data})
+				var html = itemsDBind({items: data})
 				dataContainer.html(html);
 				myfunc()
 			}//cb

@@ -31,7 +31,7 @@ loadjs.ready(['promise','fetch'], function () {
 	/* load bundle 'core' */
 	loadjs([
 		'//cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js'
-		,'//cdn.jsdelivr.net/npm/signals@1.0.0/dist/signals.min.js'
+		//,'//cdn.jsdelivr.net/npm/signals@1.0.0/dist/signals.min.js'
 		//, '//cdn.jsdelivr.net/npm/riot@3.9.1/riot.js'
 	], 'core' /* bundle ID */, {
 		async: false //required due to loadjs bug with bundles
@@ -50,7 +50,11 @@ loadjs.ready(['core'], function () {
 
 function cssLoaded() {// called by the style sheet in layout
 	console.log('css loaded', Date.now()-_start)
-	loadjs.done('css')
+	loadjs([ '/assets/css/main.css'
+		], 'css', {
+		async: false //required due to loadjs bug with bundles
+	})
+	//loadjs.done('css')
 }
 
 loadjs.ready(['css', 'cssJs', 'site'], function () {
