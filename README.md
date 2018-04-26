@@ -1,2 +1,2 @@
-# topseed-hello
-Best practices 2018
+# topseed-blog
+A sample blog project for nbake

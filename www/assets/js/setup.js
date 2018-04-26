@@ -39,7 +39,7 @@ loadjs.ready(['promise','fetch'], function () {
 })
 loadjs.ready(['core'], function () {
 	//window['SITE'] = new signals.Signal() //site events
-	loadjs([ '/sui/semantic.min.js'
+	loadjs([ '/assets/css/semantic.min.js'
 		], 'cssJs', {
 		async: false //required due to loadjs bug with bundles
 	})
@@ -70,8 +70,7 @@ loadjs.ready('style', function(){
 		}
 		else if (evt.type == tsrouter.PAGE)  {
 			$(tsrouter.zone).html(evt.newContent)
-			//$('#appbar').removeClass('appbar-hide')
-			//$('#appbar').addClass('appbar-show')
+			window.scrollTo(0, 0)
 		}
 	})
 })
