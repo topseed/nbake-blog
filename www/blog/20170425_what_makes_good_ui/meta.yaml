@@ -1,13 +1,11 @@
 basedir: ../../
 # http://jsonfeed.org/version/1
 
-id: https://blog.nbake.org/blog/20170425_what_makes_good_ui
 title: What Makes Good UI
 created: April 25, 2017
 date_published: '2017-04-25T17:00:00-08:00'
 content_html: In this article, we talk about what makes good UI.
-url: /blog/20170425_what_makes_good_ui
-image: /blog/20170425_what_makes_good_ui/assets/img/light768.jpg
+image: assets/img/light768.jpg
 author:
   name: Wolfgang Gehner
   avatar: /assets/img/wolf.jpg
