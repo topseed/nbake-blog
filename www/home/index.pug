@@ -15,11 +15,14 @@ block main
 		render = function(tag){
 			var data = Object.assign({}, feed) //work on copy
 			if (tag) {
+				localStorage.setItem('tag', tag)
 				data.items = data.items.filter(function(item){
 					if (!item.tags) return false;
 					return (item.tags.filter(function(t){ return t === tag })).length > 0
 				})
 			}
+			else
+				localStorage.removeItem('tag')
 			$('.ui.three.doubling.cards').html(itemsDBind(data)); 
 			//itemsDBind is function in /blog/items_d.js, great Pug dynamic binding feature
 		}
@@ -29,7 +32,7 @@ block main
 			}).then(function(json) {
 				feed = json
 				loadjs.ready(['dbind','site'], function() {
-					render() //first time, without filter
+					render(localStorage.getItem('tag')) //first time, or after nav
 				})
 			})
 		})
