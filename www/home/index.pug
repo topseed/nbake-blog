@@ -15,7 +15,7 @@ block main
 		render = function(tag){
 			var data = Object.assign({}, feed) //work on copy
 			if (tag) {
-				localStorage.setItem('tag', tag)
+				localStorage.setItem('tag', tag) //keep state
 				data.items = data.items.filter(function(item){
 					if (!item.tags) return false;
 					return (item.tags.filter(function(t){ return t === tag })).length > 0
