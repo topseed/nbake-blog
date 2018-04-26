@@ -2,22 +2,32 @@
 	letter-spacing: .05em !important;
 }
 
-.ui.menu {
+/*.ui.menu {
 	height: 1.5em !important;
-}
+}*/
 
 body, html  {height: 100%; }
-	.bg {
-		background-image: url("/assets/img/road-sm.jpg");
-		/* Full height */
-		height: 100%;
-		/* Center and scale the image nicely */
-		/*background-position: center; // in style ready */
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
+.bg {
+	background-image: url("/assets/img/road-sm.jpg");
+	height: 100%;
+	/*background-position: center; // in style ready */
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 
-.pusher {
+.article.ui.segments {
+	margin-top:-10px;padding-top:-10px;
+}
+
+img.article {
+	width:100% 
+}
+
+a.ui.tiny.secondary.inverted.button {
+	width:100%
+}
+
+/*.pusher {
 	margin-top: 1.5em;
 }
 
@@ -25,4 +35,4 @@ body, html  {height: 100%; }
 	.computer_only {
 		display: none !important;
 	}
-}
+}*/

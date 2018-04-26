@@ -14,15 +14,13 @@ html
 
 		.top
 			include _top
-		.ui.container
-			.ui.segments
-				.ui.segment
-					block main
+		.pusher
+			block main
+					
 		.ui.inverted.vertical.footer.segment
 			.ui.container Footer here
-		//-.pusher
 
-		link(rel='stylesheet', href='/assets/Semantic-UI/dist/semantic.min.css', onload='cssLoaded()')
+		link(rel='stylesheet', href='/sui/semantic.min.css', onload='cssLoaded()')
 		script.
 			console.log('layout')
 

@@ -4,6 +4,37 @@ block head
 	title #{title}
 
 block main
-	p
-	.ui.text.container
-		include _pinc.pug
+	include /plugin/_menu
+	.ui.container
+		.ui.segments
+			.ui.segment
+				p
+				.ui.three.doubling.cards
+	script.
+		var feed
+		render = function(tag){
+			var data = Object.assign({}, feed) //work on copy
+			if (tag) {
+				data.items = data.items.filter(function(item){
+					if (!item.tags) return false;
+					return (item.tags.filter(function(t){ return t === tag })).length > 0
+				})
+			}
+			$('.ui.three.doubling.cards').html(itemsDBind(data)); 
+			//itemsDBind is function in /blog/items_d.js, great Pug dynamic binding feature
+		}
+		loadjs.ready(['core'], function () {// load data
+			fetch('/blog/items.json').then(function(resp) {
+				return resp.json()
+			}).then(function(json) {
+				feed = json
+				loadjs.ready(['dbind','site'], function() {
+					render() //first time, without filter
+				})
+			})
+		})
+		loadjs.ready('core', function() {
+			loadjs([
+				'/blog/items_d.js'
+			],'dbind', {async: false})
+		})

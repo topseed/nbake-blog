@@ -31,15 +31,15 @@ loadjs.ready(['promise','fetch'], function () {
 	/* load bundle 'core' */
 	loadjs([
 		'//cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js'
-		//,'//cdn.jsdelivr.net/npm/signals@1.0.0/dist/signals.min.js'
-		//, '//cdn.jsdelivr.net/npm/riot@3.9.1/riot.js'
+		,'//cdn.jsdelivr.net/npm/signals@1.0.0/dist/signals.min.js'
+		,'/assets/js/tsrouter.js'
 	], 'core' /* bundle ID */, {
 		async: false //required due to loadjs bug with bundles
 	})
 })
 loadjs.ready(['core'], function () {
 	//window['SITE'] = new signals.Signal() //site events
-	loadjs([ '//cdn.jsdelivr.net/npm/semantic-ui@2.3.0/dist/semantic.js'
+	loadjs([ '/sui/semantic.min.js'
 		], 'cssJs', {
 		async: false //required due to loadjs bug with bundles
 	})
@@ -62,6 +62,20 @@ loadjs.ready(['css', 'cssJs', 'site'], function () {
 		loadjs.done('style')
 	},1)
 })
+
+loadjs.ready('style', function(){
+	tsrouter.zone ='.pusher'
+	tsrouter.onNavigate(function(evt) {
+		if (evt.type == tsrouter.NAV)  {
+		}
+		else if (evt.type == tsrouter.PAGE)  {
+			$(tsrouter.zone).html(evt.newContent)
+			//$('#appbar').removeClass('appbar-hide')
+			//$('#appbar').addClass('appbar-show')
+		}
+	})
+})
+
 
 // usage: ////////////////////////////////////////////////////////////////////
 loadjs.ready(['core'], function () {// load data
