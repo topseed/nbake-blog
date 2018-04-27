@@ -17,7 +17,7 @@
         "management",
         "pug"
       ],
-      "id": "20170425_what_makes_good_ui"
+      "url": "20170425_what_makes_good_ui"
     },
     {
       "title": "What Makes A Good Manager",
@@ -32,7 +32,7 @@
       "tags": [
         "management"
       ],
-      "id": "20170528_what_makes_a_good_manager"
+      "url": "20170528_what_makes_a_good_manager"
     },
     {
       "title": "What Makes Great UX",
@@ -49,7 +49,7 @@
         "management",
         "trinity"
       ],
-      "id": "20171125_what_makes_great_ux"
+      "url": "20171125_what_makes_great_ux"
     },
     {
       "title": "What Makes Great Software",
@@ -66,7 +66,7 @@
         "development",
         "trinity"
       ],
-      "id": "20171231_what_makes_great_software"
+      "url": "20171231_what_makes_great_software"
     },
     {
       "title": "What Makes Great UI",
@@ -83,7 +83,7 @@
         "development",
         "trinity"
       ],
-      "id": "20180202_what_makes_great_ui"
+      "url": "20180202_what_makes_great_ui"
     },
     {
       "title": "What Makes Really Great UI",
@@ -100,7 +100,7 @@
         "development",
         "trinity"
       ],
-      "id": "20180425_what_makes_really_great_ui"
+      "url": "20180425_what_makes_really_great_ui"
     }
   ]
 }
