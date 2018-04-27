@@ -1,8 +1,8 @@
 each item in items
 
-	a.ui.blurring.fluid.blue.card(href=item.url)
+	a.ui.blurring.fluid.blue.card(href=prefix+item.id)
 		.image
-			img(src=item.url+'/'+item.image)
+			img(src=prefix+item.id+'/'+item.image)
 		.content
 			.header #{item.title}
 			.meta #{item.created}

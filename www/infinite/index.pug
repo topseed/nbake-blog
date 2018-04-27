@@ -24,6 +24,7 @@ block main
 			{
 				//console.log('i:'+i)
 				var c = document.createElement('div')
+				filteredItems[i].prefix = feed.prefix //included in items.json from meta.yaml
 				//itemDBind is function in /blog/item_d.js, great Pug dynamic binding feature
 				c.innerHTML = itemDBind(filteredItems[i])
 				var el = c.firstChild //only using div to convert string to DOM
@@ -52,8 +53,14 @@ block main
 			}
 		}
 		function render(tag){
-			//$cards = document.querySelector('#cards')
 			var data = Object.assign({}, feed) //work on copy
+			//simulate a long list (6 items x 32 = 192 items)
+			data.items = data.items.concat(data.items)
+			data.items = data.items.concat(data.items)
+			data.items = data.items.concat(data.items)
+			data.items = data.items.concat(data.items)
+			data.items = data.items.concat(data.items)
+			
 			if (tag) {
 				localStorage.setItem('tag', tag) //keep state
 				filteredItems = data.items.filter(function(item){
@@ -71,7 +78,7 @@ block main
 			showMore() //show a few
 		}
 		loadjs.ready(['core'], function () {// load data
-			fetch('/infinite/fooitems.json').then(function(resp) {
+			fetch('/blog/items.json').then(function(resp) {
 				return resp.json()
 			}).then(function(json) {
 				feed = json
