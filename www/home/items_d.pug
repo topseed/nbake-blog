@@ -1,12 +1,16 @@
 each item in items
-
-	a.ui.blurring.fluid.blue.card(href=prefix+item.url+'/')
-		.image
-			img(src=prefix+item.url+'/'+item.image)
-		.content
-			.header #{item.title}
-			.meta #{item.created}
-			.description
-				| #{item.content_html}
-		.extra.content
-			| Author info here
+	.column
+		a.ui.fluid.blue.card(href=prefix+item.url+'/')
+			.image
+				img(src=prefix+item.url+'/'+item.image)
+			.content
+				.header #{item.title}
+				.meta #{item.created}
+				.description
+					| #{item.content_html}
+			.extra.content
+				h5.ui.image.header
+					img.ui.avatar.image(src=item.author.avatar)
+					.content
+						| #{item.author.name}
+						.sub.header #{item.read_minutes} minute read

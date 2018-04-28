@@ -12,6 +12,7 @@
         "name": "Wolfgang Gehner",
         "avatar": "/assets/img/wolf.jpg"
       },
+      "read_minutes": 5,
       "tags": [
         "design",
         "management",
@@ -29,6 +30,7 @@
         "name": "Vic Cekvenich",
         "avatar": "/assets/img/vic.jpg"
       },
+      "read_minutes": 6,
       "tags": [
         "management"
       ],
@@ -44,6 +46,7 @@
         "name": "Wolfgang Gehner",
         "avatar": "/assets/img/wolf.jpg"
       },
+      "read_minutes": 7,
       "tags": [
         "design",
         "management",
@@ -61,6 +64,7 @@
         "name": "Vic Cekvenich",
         "avatar": "/assets/img/vic.jpg"
       },
+      "read_minutes": 5,
       "tags": [
         "management",
         "development",
@@ -78,6 +82,7 @@
         "name": "Wolfgang Gehner",
         "avatar": "/assets/img/wolf.jpg"
       },
+      "read_minutes": 4,
       "tags": [
         "design",
         "development",
@@ -95,6 +100,7 @@
         "name": "Wolfgang Gehner",
         "avatar": "/assets/img/wolf.jpg"
       },
+      "read_minutes": 3,
       "tags": [
         "design",
         "development",

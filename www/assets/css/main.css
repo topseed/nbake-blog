@@ -15,8 +15,20 @@ body, html  {height: 100%; }
 	background-size: cover;
 }
 
+#menu {
+	min-height:4em;
+}
+
+#menu .secondary.inverted.button {
+	width: 100%;
+}
+
 .article.ui.segments {
 	margin-top:-10px;padding-top:-10px;
+}
+
+.card {
+	height:100%; /* make all cards same height */
 }
 
 img.article {

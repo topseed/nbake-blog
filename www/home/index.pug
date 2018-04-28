@@ -9,7 +9,8 @@ block main
 		.ui.segments
 			.ui.segment
 				p
-				.ui.three.doubling.cards
+				#cards.ui.three.column.stackable.grid
+
 	script.
 		var feed
 		render = function(tag){
@@ -23,7 +24,7 @@ block main
 			}
 			else
 				localStorage.removeItem('tag')
-			$('.ui.three.doubling.cards').html(itemsDBind(data)); 
+			$('#cards').html(itemsDBind(data)); 
 			//itemsDBind is function in /blog/items_d.js, great Pug dynamic binding feature
 		}
 		loadjs.ready(['core'], function () {// load data
