@@ -1,0 +1,88 @@
+.ui.container
+	//-.mobile.only.ui.grid
+	.ui.grid
+		.column
+			.ui.fluid.multiple.search.selection.dropdown
+				input(id='tag', type='hidden')
+				i.dropdown.icon
+				.default.text Select Categories
+				#mymenu.menu
+					.item(data-value='management')
+						i.dollar.sign.icon
+						| Management
+					.item(data-value='design')
+						i.edit.icon
+						| Design
+					.item(data-value='development')
+						i.desktop.icon
+						| Development
+					.item(data-value='pug')
+						i.paw.icon
+						| Pug
+					.item(data-value='trinity')
+						i.file.code.icon
+						| HTML/CSS/&#8203;JavaScript
+			.spacer
+	//-#menu.computer.only.tablet.only.doubling.stackable.equal.width.six.column.center.aligned.middle.aligned.ui.grid.container
+		.column
+			.ui.tiny.secondary.inverted.button(onclick="render()") All Articles
+		.column
+			.ui.tiny.secondary.inverted.button(onclick="render('management')") For Managers
+		.column
+			.ui.tiny.secondary.inverted.button(onclick="render('design')") For Designers
+		.column
+			.ui.tiny.secondary.inverted.button(onclick="render('development')") For Developers
+		.column
+			.ui.tiny.secondary.inverted.button(onclick="render('pug')") About Pug
+		.column
+			.ui.tiny.secondary.inverted.button(onclick="render('trinity')") HTML/CSS/&#8203;JavaScript
+.ui.container
+	| &nbsp;
+
+script.
+	loadjs.ready('core', function() {
+		if (!loadjs.isDefined('dropdown')) //need this for tsrouter.js
+			{
+				loadjs([
+					'/plugin/dropdown/assets/css/dropdown.css'
+				],'dropdown', {async: false})
+			}
+			else
+				loadjs.done('dropdown')
+	})	
+
+	loadjs.ready(['style','dropdown'], function() {
+		//sticky values
+		var tag = localStorage.getItem('tag');
+		if (tag!='') {
+			$('#tag').val(tag)
+		}
+		//workaround, as seting position:relative on .menu breaks style
+		function setSpacer(){ //make from for dropdown
+			setTimeout(function(){
+				var m = $('#mymenu.visible').outerHeight()||0
+				$('.spacer').animate({height:m},100)
+			},400) //default dropdown transition is 200ms, only know new size after
+		}
+		$('.ui.dropdown').dropdown({
+			transition: 'drop',
+			action: 'activate',
+			onChange: function(value, text, $selectedItem) {
+				render(value)
+			},
+			onAdd: function(addedValue, addedText, $addedChoice){
+				setSpacer(); return true;
+			},
+			onRemove(removedValue, removedText, $removedChoice){
+				setSpacer(); return true;
+			},
+			onShow: function(){
+				setSpacer(); return true;
+			}, 
+			onHide: function(){
+				setSpacer(); return true;
+			}
+		})
+	})
+
+

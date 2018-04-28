@@ -65,7 +65,7 @@ block main
 				localStorage.setItem('tag', tag) //keep state
 				filteredItems = data.items.filter(function(item){
 					if (!item.tags) return false;
-					return (item.tags.filter(function(t){ return t === tag })).length > 0
+					return (item.tags.filter(function(t){ return tag.split(',').indexOf(t) > -1 })).length > 0 //support comma-delimited multiple
 				})
 			}
 			else {
