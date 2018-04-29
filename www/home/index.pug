@@ -13,17 +13,18 @@ block main
 
 	script.
 		var feed
-		render = function(tag){
+		window.onhashchange = function(event) { //menu links change hash
+			var tag = location.href.split('#')[1]; //hash or null
+			render(tag) 
+		}
+		function render(tag){
 			var data = Object.assign({}, feed) //work on copy
 			if (tag) {
-				localStorage.setItem('tag', tag) //keep state
 				data.items = data.items.filter(function(item){
 					if (!item.tags) return false;
 					return (item.tags.filter(function(t){ return tag.split(',').indexOf(t) > -1 })).length > 0
 				})
 			}
-			else
-				localStorage.removeItem('tag')
 			$('#cards').html(itemsDBind(data)); 
 			//itemsDBind is function in /blog/items_d.js, great Pug dynamic binding feature
 		}
@@ -33,7 +34,8 @@ block main
 			}).then(function(json) {
 				feed = json
 				loadjs.ready(['dbind','site'], function() {
-					render(localStorage.getItem('tag')) //first time, or after nav
+					var tag = location.href.split('#')[1];
+					render(tag) //first time, or after nav
 				})
 			})
 		})

@@ -25,17 +25,17 @@
 			.spacer
 	//-#menu.computer.only.tablet.only.doubling.stackable.equal.width.six.column.center.aligned.middle.aligned.ui.grid.container
 		.column
-			.ui.tiny.secondary.inverted.button(onclick="render()") All Articles
+			a.ui.tiny.secondary.inverted.button(href='#') All Articles
 		.column
-			.ui.tiny.secondary.inverted.button(onclick="render('management')") For Managers
+			a.ui.tiny.secondary.inverted.button(href='#('management') For Managers
 		.column
-			.ui.tiny.secondary.inverted.button(onclick="render('design')") For Designers
+			a.ui.tiny.secondary.inverted.button(href='#('design') For Designers
 		.column
-			.ui.tiny.secondary.inverted.button(onclick="render('development')") For Developers
+			a.ui.tiny.secondary.inverted.button(href='#('development') For Developers
 		.column
-			.ui.tiny.secondary.inverted.button(onclick="render('pug')") About Pug
+			a.ui.tiny.secondary.inverted.button(href='#('pug') About Pug
 		.column
-			.ui.tiny.secondary.inverted.button(onclick="render('trinity')") HTML/CSS/&#8203;JavaScript
+			a.ui.tiny.secondary.inverted.button(href='#('trinity') HTML/CSS/&#8203;JavaScript
 .ui.container
 	| &nbsp;
 
@@ -52,9 +52,9 @@ script.
 	})	
 
 	loadjs.ready(['style','dropdown'], function() {
-		//sticky values
-		var tag = localStorage.getItem('tag');
-		if (tag!='') {
+		var tag = location.href.split('#')[1];
+		console.log('done with style, dropdown, reading tag'+tag)
+		if (tag) {
 			$('#tag').val(tag)
 		}
 		//workaround, as seting position:relative on .menu breaks style
@@ -68,7 +68,9 @@ script.
 			transition: 'drop',
 			action: 'activate',
 			onChange: function(value, text, $selectedItem) {
-				render(value)
+				location.hash = '#'+value //does not trigger render, so we need to :
+				history.pushState({url: location.href}, '', location.href) //simulate history writing
+				render(value) //and render fitlered data
 			},
 			onAdd: function(addedValue, addedText, $addedChoice){
 				setSpacer(); return true;

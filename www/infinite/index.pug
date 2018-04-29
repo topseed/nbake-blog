@@ -16,13 +16,15 @@ block main
 		var $cards
 		var filteredItems = []
 		var lastItemIsVisible;
-
+		window.onhashchange = function(event) { //menu links change hash
+			var tag = location.href.split('#')[1]; //hash value or null
+			render(tag)
+		}
 		function showMore(){ //infinite scroll
 			$('.lastItem').removeClass('lastItem');
 			var maxPos = Math.min(len, i+batchSize)-1
 			for (i; i <= maxPos; i++ )
 			{
-				//console.log('i:'+i)
 				var c = document.createElement('div')
 				filteredItems[i].prefix = feed.prefix //included in items.json from meta.yaml
 				//itemDBind is function in /blog/item_d.js, great Pug dynamic binding feature
@@ -60,17 +62,12 @@ block main
 			data.items = data.items.concat(data.items)
 			data.items = data.items.concat(data.items)
 			data.items = data.items.concat(data.items)
-			
+			filteredItems = data.items
 			if (tag) {
-				localStorage.setItem('tag', tag) //keep state
 				filteredItems = data.items.filter(function(item){
 					if (!item.tags) return false;
 					return (item.tags.filter(function(t){ return tag.split(',').indexOf(t) > -1 })).length > 0 //support comma-delimited multiple
 				})
-			}
-			else {
-				filteredItems = data.items
-				localStorage.removeItem('tag')
 			}
 			i = 0
 			len = filteredItems.length
@@ -83,7 +80,8 @@ block main
 			}).then(function(json) {
 				feed = json
 				loadjs.ready(['dbind','site'], function() {
-					render(localStorage.getItem('tag')) //first time, or after nav
+					var tag = location.href.split('#')[1];
+					render(tag) //first time, or after nav
 				})
 			})
 		})
@@ -117,4 +115,3 @@ block main
 				}
 			}
 		}
-		

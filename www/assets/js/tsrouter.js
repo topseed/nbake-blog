@@ -14,6 +14,7 @@ tsrouter.onNavigate(function(evt) {
 $(document).ready(function () {
 
 	$(window).on('popstate', function(e) {//back/forward button
+		console.log('tsrouter popstate'+e.originalEvent.state)
 		var state = e.originalEvent.state
 		if (state !== null) {
 			e.preventDefault()
@@ -34,9 +35,9 @@ $(document).ready(function () {
 		if (tsrouter.isExternal(href)) {
 			return
 		}
-		if (href.indexOf('#')>-1) { //don't override link with #
-			return
-		}
+		//if (href.indexOf('#')>-1) { //don't override link with #
+		//	return
+		//}
 		e.preventDefault()
 		var fromHref = window.location.href
 		localStorage.setItem('oldUrl', href)
@@ -121,6 +122,12 @@ var tsrouter = {
 	}
 }
 
-/*window.addEventListener('pageshow', function(event) {
-	console.log('pageshow:', event.timeStamp)
-})*/
+window.addEventListener('pageshow', function(event) {
+	//console.log('pageshow:', event.timeStamp)
+	loadjs.done('pageshow')
+})
+
+window.addEventListener('load', function(event) {
+	//console.log('load:', event.timeStamp)
+	loadjs.done('norouter')
+})
