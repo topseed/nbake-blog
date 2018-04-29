@@ -10,7 +10,9 @@
 	box-shadow: none;
 }
 
-/*
 .ui.dropdown .menu {
-	position: relative !important; //breaks layout
-}*/
+	position: relative !important; 
+	margin-left: -6px !important;
+	margin-bottom: -8px !important;
+	width: calc(100% + 2.6em) !important;
+}
