@@ -34,19 +34,19 @@ block main
 				return resp.json()
 			}).then(function(json) {
 				feed = json
-				loadjs.ready(['dbind','site'], function() {
+				loadjs.ready(['dbind-select','site'], function() {
 					var tag = location.href.split('#')[1] //hash or null
 					render(tag)
 				})
 			})
 		})
 		loadjs.ready('core', function() {
-			if (!loadjs.isDefined('dbind')) //need this for tsrouter.js
+			if (!loadjs.isDefined('dbind-select')) //need this for tsrouter.js
 			{
 				loadjs([
 					'/home/items_d.js'
-				],'dbind', {async: false})
+				],'dbind-select', {async: false})
 			}
 			else
-				loadjs.done('dbind')
+				loadjs.done('dbind-select')
 		})

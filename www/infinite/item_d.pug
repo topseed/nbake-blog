@@ -1,15 +1,16 @@
 .column
-	a.ui.blurring.fluid.blue.card(href=prefix+url+'/')
-		.image
-			img(src=prefix+url+'/'+image)
-		.content
-			.header #{title}
-			.meta #{created}
-			.description
-				| #{content_html}
-		.extra.content
-			h5.ui.image.header
-				img.ui.avatar.image(src=author.avatar)
-				.content
-					| #{author.name}
-					.sub.header #{read_minutes} minute read
+	a(href=prefix+url+'/')
+		.ui.fluid.blue.card
+			.image
+				img(src=prefix+url+'/'+image)
+			.content
+				.header #{title}
+				.meta #{created}
+				.description
+					| #{content_html}
+			.extra.content
+				h5.ui.image.header
+					img.ui.avatar.image(src=author.avatar)
+					.content
+						| #{author.name}
+						.sub.header #{read_minutes} minute read

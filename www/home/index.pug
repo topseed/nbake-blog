@@ -33,19 +33,20 @@ block main
 				return resp.json()
 			}).then(function(json) {
 				feed = json
-				loadjs.ready(['dbind','site'], function() {
+				loadjs.ready(['dbind-home','site'], function() {
+					console.log('dbind-home ready')
 					var tag = location.href.split('#')[1];
 					render(tag) //first time, or after nav
 				})
 			})
 		})
 		loadjs.ready('core', function() {
-			if (!loadjs.isDefined('dbind')) //need this for tsrouter.js
+			if (!loadjs.isDefined('dbind-home')) //need this for tsrouter.js
 			{
 				loadjs([
 					'/home/items_d.js'
-				],'dbind', {async: false})
+				],'dbind-home', {async: false})
 			}
 			else
-				loadjs.done('dbind')
+				loadjs.done('dbind-home')
 		})
