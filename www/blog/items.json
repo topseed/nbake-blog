@@ -1,6 +1,8 @@
 {
   "title": "nbake blog",
   "prefix": "/blog/",
+  "nbVer": "v2.05.01",
+  "note": "This is statically serveed and visible publicly. Check dbake if you want something different",
   "items": [
     {
       "title": "What Makes Good UI",
