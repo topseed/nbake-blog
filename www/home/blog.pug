@@ -14,7 +14,9 @@ br
 p
 
 script.
-	loadjs('feed_d.js', 'binding', {async: false})
+	if (!loadjs.isDefined('binding')) //need this for tsrouter
+		loadjs('feed_d.js', 'binding', {async: false})
+	else loadjs.done('binding')
 
 	loadjs.ready(['feed','binding'], function () {
 		console.log('sz', feed.items.length)
@@ -53,7 +55,7 @@ script.
 		console.log('done binding')
 	}//*()
 
-	let cur = 0
+	cur = 0
 	function _addOne($t) {
 		let sz = feed.items.length
 		if(--sz < cur ) { // array guard
@@ -61,7 +63,7 @@ script.
 			console.log('the end')
 			return $t
 		}
-		let item = feed.items[cur++]
+		let item =  $.extend({}, feed.items[cur++] ) // clone due to ts router
 		item.url = '/blog/' + item.url +'/'
 		item.image =  item.url + item.image
 		console.log(item.image)

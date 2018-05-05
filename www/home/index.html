@@ -25,7 +25,9 @@ loadjs.ready(['promise','fetch'], function () {// load data
 	.toc.item {
 		display: none !important;
 	}
-}</style><div class="pusher"><p></p><br><p></p><div class="ui text container"><p></p><br><p></p><div><div id="here"></div></div><p></p><br><p></p><button class="ui button" id="add" type="submit">Add Few</button><p></p><br><p></p><script>loadjs('feed_d.js', 'binding', {async: false})
+}</style><div class="pusher"><p></p><br><p></p><div class="ui text container"><p></p><br><p></p><div><div id="here"></div></div><p></p><br><p></p><button class="ui button" id="add" type="submit">Add Few</button><p></p><br><p></p><script>if (!loadjs.isDefined('binding')) //need this for tsrouter
+	loadjs('feed_d.js', 'binding', {async: false})
+else loadjs.done('binding')
 
 loadjs.ready(['feed','binding'], function () {
 	console.log('sz', feed.items.length)
@@ -64,7 +66,7 @@ function addFew() {
 	console.log('done binding')
 }//*()
 
-let cur = 0
+cur = 0
 function _addOne($t) {
 	let sz = feed.items.length
 	if(--sz < cur ) { // array guard
@@ -72,7 +74,7 @@ function _addOne($t) {
 		console.log('the end')
 		return $t
 	}
-	let item = feed.items[cur++]
+	let item =  $.extend({}, feed.items[cur++] ) // clone
 	item.url = '/blog/' + item.url +'/'
 	item.image =  item.url + item.image
 	console.log(item.image)
