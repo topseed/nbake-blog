@@ -1,10 +1,10 @@
-extends /plugin/_layout
+extends /layout1/_layout
 
 block head
 	title #{title}
 
 block main
-	include /plugin/_menu
+	include /layout1/_menu
 	.ui.container
 		.ui.segments
 			.ui.segment
@@ -32,7 +32,7 @@ block main
 				var el = c.firstChild //only using div to convert string to DOM
 				if (i == maxPos && i < len) //add class .last to last item of batch
 					el.classList.add('lastItem');
-				$cards.appendChild(el) 
+				$cards.appendChild(el)
 			}
 			$(window).off('resize scroll') //remove any old handlers
 			if (i <= len) //only do it when list is incomplete
@@ -45,11 +45,11 @@ block main
 						loadMore() // already visible, maybe huge screen, load more
 					else
 					{
-						var handler = onVisibilityChange(lastItem, function() { 
-							showMore() 
+						var handler = onVisibilityChange(lastItem, function() {
+							showMore()
 						})
-						$(window).on('resize scroll', handler); 
-				
+						$(window).on('resize scroll', handler);
+
 					}
 				}
 			}
@@ -95,7 +95,7 @@ block main
 			else
 				loadjs.done('dbind-infinite')
 		})
-		
+
 		function isInViewport(el) {
 			if (!el.length) return false;
 			var elementTop = el.offset().top;

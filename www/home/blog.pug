@@ -7,6 +7,8 @@ p Hello
 script.
 	loadjs('feed_d.js', 'binding', {async: false})
 
+	let cur = 0
+
 	loadjs.ready(['feed','binding'], function () {
 		console.log('binding')
 		let $t = $('<div></div>')//detached
