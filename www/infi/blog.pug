@@ -1,10 +1,17 @@
 
-br
-p Hello Page One!
 
+p Hello
 
+#here
 
 script.
-	loadjs.ready('style', function () {
-		console.log('page 1 component script here')
+	loadjs('feed_d.js', 'binding', {async: false})
+
+	loadjs.ready(['feed','binding'], function () {
+		console.log('bind')
+		var data = {
+			'myNum': Math.floor(Math.random() * 20)
+		}
+
+		$('#here').html(feedDBind(data))
 	})
