@@ -6,12 +6,12 @@ block head
 	title #{title}
 	script.
 		let feed
-		loadjs.ready(['core'], function () {// load data
+		loadjs.ready(['promise','fetch'], function () {// load data
 			fetch('/blog/items.json').then(function(resp) {
 				return resp.json()
 			}).then(function(json) {
 				feed = json
-				console.log(data)
+				console.log('ready', Date.now()-_start)
 				loadjs.done('feed')
 			})
 		})
