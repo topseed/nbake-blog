@@ -1,25 +1,37 @@
 
-
-p Hello
-
 #here
 
 script.
 	loadjs('feed_d.js', 'binding', {async: false})
 
-	let cur = 0
-
 	loadjs.ready(['feed','binding'], function () {
-		console.log('binding')
-		let $t = $('<div></div>')//detached
 
-		$t = addOne($t, 0)
-		$('#here').append( $t )
-
+		addFew()
 	})
 
-	function addOne($t, i) {
-		let item = feed.items[0]
+	let cur = 0
+
+	function addFew() {
+		let $t = $('<div></div>')//detached
+
+		let c = 3 // add 3
+		while(c>0) {
+			$t = _addOne($t )
+			c--
+		}
+
+		$('#here').append( $t )
+		console.log('done binding')
+	}//*()
+
+	function _addOne($t) {
+		let sz = feed.items.length
+		if(--sz <= cur ) {
+			console.log(feed.items.length, cur)
+			return $t
+		}
+
+		let item = feed.items[cur++]
 		item.url = item.url +'/'
 		item.image = '/blog/' + item.url + item.image
 
@@ -28,4 +40,4 @@ script.
 		var el = feedDBind(item)
 		$t.append(el)
 		return $t
-	}
+	}//()
