@@ -4,12 +4,13 @@ html
 		script.
 			let _start=Date.now()
 		include _header
+		script(src='//cdn.jsdelivr.net/npm/loadjs@3.5.4/dist/loadjs.min.js')
+
 		block head
 		style.
 			html { opacity: 0.005; }
 
 	body
-		script(src='//cdn.jsdelivr.net/npm/loadjs@3.5.4/dist/loadjs.min.js')
 		script(src='/assets/js/setup.js')
 
 		//- side menu shell
