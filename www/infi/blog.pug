@@ -9,9 +9,14 @@ script.
 
 	loadjs.ready(['feed','binding'], function () {
 		console.log('bind')
-		var data = {
-			'myNum': Math.floor(Math.random() * 20)
-		}
 
-		$('#here').html(feedDBind(data))
+		let item = feed.items[0]
+		item.url = item.url +'/'
+		item.image = '/blog/' + item.url + item.image
+
+		console.log(item.image)
+
+
+		$('#here').html( feedDBind(item) )
+
 	})
