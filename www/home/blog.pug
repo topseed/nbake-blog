@@ -2,16 +2,34 @@
 p
 br
 p
-button#add.ui.button(type='submit') Add
+div
+	#here
+
 p
-#here
+br
+p
+button#add.ui.button(type='submit') Add Few
+p
+br
+p
 
 script.
 	loadjs('feed_d.js', 'binding', {async: false})
 
 	loadjs.ready(['feed','binding'], function () {
+		console.log('sz', feed.items.length)
 		addFew()
+
+		// setup viewport event
+		const addEl = document.getElementById('add')
+		let observer = new IntersectionObserver(onShowing)
+		observer.observe(addEl)
+
 	})
+
+	function onShowing() {
+		console.log('I can see it')
+	}
 
 	loadjs.ready('core', function() {
 		$('#add').click(function() {
@@ -29,17 +47,20 @@ script.
 		$('#here').append( $t )
 		console.log('done binding')
 	}//*()
+
 	let cur = 0
 	function _addOne($t) {
 		let sz = feed.items.length
-		if(--sz <= cur ) { // array guard
+		if(--sz < cur ) { // array guard
 			console.log(feed.items.length, cur)
+			console.log('the end')
 			return $t
 		}
 		let item = feed.items[cur++]
 		item.url = item.url +'/'
 		item.image = '/blog/' + item.url + item.image
 		console.log(item.image)
+
 		var el = feedDBind(item) //bind!
 		$t.append(el)
 		return $t
