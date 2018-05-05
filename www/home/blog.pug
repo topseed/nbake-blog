@@ -19,7 +19,9 @@ script.
 	loadjs.ready(['feed','binding'], function () {
 		console.log('sz', feed.items.length)
 		addFew()// init
-		loadjs.done('firstPg')
+		setTimeout(function(){
+			loadjs.done('firstPg')
+		},1000/60)
 	}) //ready
 
 	loadjs.ready(['style','firstPg'], function () {
@@ -27,7 +29,7 @@ script.
 		const addEl = document.getElementById('add')
 		let observer = new IntersectionObserver(function(e){
 			if(e[0].isIntersecting) {
-				console.log('I can see it')
+				console.log('I can see the end')
 				// addFew() // :-)
 			}//fi
 		})// observer event
@@ -60,8 +62,8 @@ script.
 			return $t
 		}
 		let item = feed.items[cur++]
-		item.url = item.url +'/'
-		item.image = '/blog/' + item.url + item.image
+		item.url = '/blog/' + item.url +'/'
+		item.image =  item.url + item.image
 		console.log(item.image)
 
 		var el = feedDBind(item) //bind!
