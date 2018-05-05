@@ -34,7 +34,7 @@ html
 				setTimeout(function(){
 					document.getElementsByTagName('html')[0].style.opacity = 1
 					console.log(Date.now()-_start)//time to show
-				},1000/15)// 2 frames at 30fps
+				},1000/60)// 2 frames
 
 				$('.ui.sidebar').sidebar('attach events', '.toc.item')
 

@@ -18,18 +18,21 @@ script.
 
 	loadjs.ready(['feed','binding'], function () {
 		console.log('sz', feed.items.length)
-		addFew()
+		addFew()// init
+		loadjs.done('firstPg')
+	}) //ready
 
+	loadjs.ready(['style','firstPg'], function () {
 		// setup viewport event
 		const addEl = document.getElementById('add')
-		let observer = new IntersectionObserver(onShowing)
+		let observer = new IntersectionObserver(function(e){
+			if(e[0].isIntersecting) {
+				console.log('I can see it')
+				// addFew() // :-)
+			}//fi
+		})// observer event
 		observer.observe(addEl)
-
-	})
-
-	function onShowing() {
-		console.log('I can see it')
-	}
+	}) // cssJs
 
 	loadjs.ready('core', function() {
 		$('#add').click(function() {
