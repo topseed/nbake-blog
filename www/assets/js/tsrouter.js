@@ -118,7 +118,7 @@ let tsrouter = {
 
 loadjs.ready('site', function(){
 	console.log('setup tsr')
-	tsrouter.zone = '#ss'
+	tsrouter.zone = '.pusher'
 	tsrouter.onNavigate(function(evt) {
 		if (evt.type == tsrouter.NAV)  { //start
 			console.log('tsrouter NAV')
