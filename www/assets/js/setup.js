@@ -39,7 +39,7 @@ loadjs.ready(['core'], function () {
 	//window['SITE'] = new signals.Signal() //site events
 	loadjs([ '/assets/Semantic-UI/dist/components/sidebar.min.js'
 		,'//cdn.jsdelivr.net/npm/intersection-observer@0.5.0/intersection-observer.js'
-		//,'/assets/js/tsrouter.js'
+		,'/assets/js/tsrouter.js'
 		//,'//cdn.jsdelivr.net/npm/dayjs@1.5.11/dist/dayjs.min.js'
 	], 'cssJs', {
 		async: false //required due to loadjs bug with bundles
