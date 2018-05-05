@@ -1,4 +1,4 @@
-/* example use: 
+/* example use:
 tsrouter.zone ='.pusher' //if div ID, use #pusher
 tsrouter.onNavigate(function(evt) {
 	if (evt.type == tsrouter.NAV)  { //navigation start
@@ -11,14 +11,16 @@ tsrouter.onNavigate(function(evt) {
 })
 */
 
-$(document).ready(function () {
+loadjs.ready(['site'], function () {
+
+	console.log('ts router', "v2.05.01")
 
 	$(window).on('popstate', function(e) {//back/forward button
 		console.log('tsrouter popstate'+e.originalEvent.state)
 		var state = e.originalEvent.state
 		if (state !== null) {
 			e.preventDefault()
-			var oldUrl = localStorage.getItem('oldUrl');
+			var oldUrl = localStorage.getItem('oldUrl')
 			localStorage.setItem('oldUrl', state.url)
 			tsrouter.loadHtml(state.url, oldUrl, true)
 		}
@@ -35,9 +37,12 @@ $(document).ready(function () {
 		if (tsrouter.isExternal(href)) {
 			return
 		}
+
 		//if (href.indexOf('#')>-1) { //don't override link with #
 		//	return
 		//}
+
+		//else:
 		e.preventDefault()
 		var fromHref = window.location.href
 		localStorage.setItem('oldUrl', href)
@@ -49,8 +54,8 @@ $(document).ready(function () {
 	localStorage.setItem('oldUrl', pg)
 })
 
-var tsrouter = { 
-	
+var tsrouter = {
+
 	zone: '.pusher' //the content in your layout. The rest should be app shell from PWA.
 	, NAV : '_navigation-start'
 	, PAGE : '_newpage-loaded'
@@ -63,14 +68,14 @@ var tsrouter = {
 	, loadHtml: function(toHref, fromHref, back) { //triggered, but function can be called directly also
 		console.log('loaded', toHref, back)
 		if (!back) {
-			history.pushState({url: toHref}, '', toHref) 
+			history.pushState({url: toHref}, '', toHref)
 		}
 
 		//fire NAV event
 		tsrouter.navigated.dispatch( {type:tsrouter.NAV, toHref:toHref, fromHref:fromHref, back:back} )
 
 		var url = tsrouter.appendQueryString(toHref, {'tsrouter': "\""+tsrouter.zone+"\""} )
-		//console.log(url)
+		console.log(url)
 		fetch(url, {
 				method: 'get',
 				credentials: 'same-origin'
@@ -87,7 +92,7 @@ var tsrouter = {
 				document.title = title
 
 				var newContent = html.find(tsrouter.zone).html()
-				
+
 				//fire new PAGE received event
 				tsrouter.navigated.dispatch( {type:tsrouter.PAGE, toHref:toHref, fromHref:fromHref, newContent:newContent, html:html, back:back} )
 
@@ -111,23 +116,21 @@ var tsrouter = {
 		return false
 	}
 
-	,appendQueryString:function (url, queryVars) {
-		var firstSeparator = (url.indexOf('?')==-1 ? '?' : '&');
-		var queryStringParts = new Array();
+	, appendQueryString:function (url, queryVars) {
+		var firstSeparator = (url.indexOf('?')==-1 ? '?' : '&')
+		var queryStringParts = new Array()
 		for(var key in queryVars) {
-			queryStringParts.push(key + '=' + queryVars[key]);
+			queryStringParts.push(key + '=' + queryVars[key])
 		}
-		var queryString = queryStringParts.join('&');
+		var queryString = queryStringParts.join('&')
 		return url + firstSeparator + queryString;
 	}
 }
 
 window.addEventListener('pageshow', function(event) {
-	//console.log('pageshow:', event.timeStamp)
-	loadjs.done('pageshow')
+	console.log('pageshow:', event.timeStamp)
 })
 
 window.addEventListener('load', function(event) {
-	//console.log('load:', event.timeStamp)
-	loadjs.done('norouter')
+	console.log('load:', event.timeStamp)
 })

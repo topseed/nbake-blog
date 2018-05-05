@@ -1,10 +1,9 @@
 
- // http://github.com/muicss/loadjs/issues/56
-
- // https://jsfiddle.net/muicss/4791kt3w
  function require(bundleIds, callbackFn) {
 	bundleIds.forEach(function(bundleId) {
-		if (!loadjs.isDefined(bundleId)) loadjs(bundles[bundleId], bundleId)
+		if (!loadjs.isDefined(bundleId)) loadjs(bundles[bundleId], bundleId, {
+			async: false //required due to loadjs bug with bundles
+		})
 	})
 	loadjs.ready(bundleIds, callbackFn)
 }
@@ -32,16 +31,17 @@ loadjs.ready(['promise','fetch'], function () {
 	loadjs([
 		'//cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js'
 		,'//cdn.jsdelivr.net/npm/signals@1.0.0/dist/signals.min.js'
-		,'/assets/js/tsrouter.js'
 	], 'core' /* bundle ID */, {
 		async: false //required due to loadjs bug with bundles
 	})
 })
 loadjs.ready(['core'], function () {
 	//window['SITE'] = new signals.Signal() //site events
-	loadjs([ '//cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js'
-			//'/assets/css/semantic.min.js'
-		], 'cssJs', {
+	loadjs([ '/assets/Semantic-UI/dist/components/sidebar.min.js'
+		//,'//cdn.jsdelivr.net/npm/dayjs@1.5.11/dist/dayjs.min.js'
+		//, '//cdn.jsdelivr.net/npm/intersection-observer@0.5.0/intersection-observer.js'
+		//'/assets/js/tsrouter.js'
+	], 'cssJs', {
 		async: false //required due to loadjs bug with bundles
 	})
 	$( document ).ready(function() {
@@ -51,11 +51,7 @@ loadjs.ready(['core'], function () {
 
 function cssLoaded() {// called by the style sheet in layout
 	console.log('css loaded', Date.now()-_start)
-	loadjs([ '/assets/css/main.css'
-		], 'css', {
-		async: false //required due to loadjs bug with bundles
-	})
-	//loadjs.done('css')
+	loadjs.done('css')
 }
 
 loadjs.ready(['css', 'cssJs', 'site'], function () {
@@ -64,20 +60,7 @@ loadjs.ready(['css', 'cssJs', 'site'], function () {
 	},1)
 })
 
-loadjs.ready('style', function(){
-	tsrouter.zone ='.pusher'
-	tsrouter.onNavigate(function(evt) {
-		if (evt.type == tsrouter.NAV)  {
-			//console.log('tsrouter nav')
-		}
-		else if (evt.type == tsrouter.PAGE)  {
-			//console.log('tsrouter PAGE')
-			$(tsrouter.zone).html(evt.newContent)
-			window.scrollTo(0, 0)
-		}
-	})
-})
-
+console.log('setup', "v2.05.01")
 // usage: ////////////////////////////////////////////////////////////////////
 loadjs.ready(['core'], function () {// load data
 	console.log('core done', Date.now()-_start)
@@ -89,3 +72,14 @@ loadjs.ready(['style'], function () {// 'show' page, ex: unhide
 	console.log('style done', Date.now()-_start)
 })
 
+// util: /////////////////////////////////////////////////////////////////////
+function getUrlVars() {
+	var vars = [], hash
+	var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&')
+	for(var i = 0; i < hashes.length; i++) {
+		hash = hashes[i].split('=')
+		vars.push(hash[0])
+		vars[hash[0]] = hash[1]
+	}
+	return vars
+}
