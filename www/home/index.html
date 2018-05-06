@@ -1,14 +1,4 @@
-<!DOCTYPE html><html><head><script>let _start=Date.now()</script><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><link rel="icon" href="/favicon.ico"><!-- firestore--><script src="//cdn.jsdelivr.net/npm/loadjs@3.5.4/dist/loadjs.min.js"></script><!--static binding ex:--><title>Page One Title</title><script>let feed
-loadjs.ready(['promise','fetch'], function () {// load data
-	fetch('/blog/items.json').then(function(resp) {
-		return resp.json()
-	}).then(function(json) {
-		feed = json
-		console.log('ready', Date.now()-_start)
-		loadjs.done('feed')
-	})
-})
-</script><style>html { opacity: 0.005; }
+<!DOCTYPE html><html><head><script>let _start=Date.now()</script><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><link rel="icon" href="/favicon.ico"><!-- firestore--><script src="//cdn.jsdelivr.net/npm/loadjs@3.5.4/dist/loadjs.min.js"></script><!--static binding ex:--><title>Page One Title</title><style>html { opacity: 0.005; }
 </style></head><body><script src="/assets/js/setup.js"></script><!--side--><div class="ui fixed vertical inverted sidebar menu"><a class="active item" href="/page/one"><i class="left icon star"></i>One</a><a class="item" href="/page/two"><i class="left icon book"></i>Two</a></div><!--top--><div class="ui fixed inverted menu"><div class="ui container"><a class="toc item"><i class="sidebar icon"></i></a><div class="item">MySite</div><a class="item" href="/page/one">One</a><a class="item" href="/page/two">Two</a></div><div class="right menu"><a class="item" href="http://github.com/topseed">Git</a></div></div><style>* {
 	letter-spacing: .05em !important;
 }
@@ -25,13 +15,22 @@ loadjs.ready(['promise','fetch'], function () {// load data
 	.toc.item {
 		display: none !important;
 	}
-}</style><div class="pusher"><p></p><br><p></p><div class="ui text container"><p></p><br><p></p><div><div id="here"></div></div><p></p><br><p></p><button class="ui button" id="add" type="submit">Add Few</button><p></p><br><p></p><script>if (!loadjs.isDefined('binding')) //need this for tsrouter
+}</style><div class="pusher"><script>loadjs.ready(['promise','fetch'], function () {// load data
+	fetch('/blog/items.json').then(function(resp) {
+		return resp.json()
+	}).then(function(json) {
+		feed = json
+		console.log('ready', Date.now()-_start)
+		loadjs.done('feed')
+	})
+})
+</script><p></p><br><p></p><div class="ui text container"><p></p><br><p></p><div><div id="here"></div></div><p></p><br><p></p><button class="ui button" id="add" type="submit">Add Few</button><p></p><br><p></p><script>if (!loadjs.isDefined('binding')) //need this for tsrouter
 	loadjs('feed_d.js', 'binding', {async: false})
 else loadjs.done('binding')
 
 loadjs.ready(['feed','binding'], function () {
 	console.log('sz', feed.items.length)
-	addFew()// init
+	addFew(2)// init
 	setTimeout(function(){
 		loadjs.done('firstPg')
 	},1000/60)
@@ -43,7 +42,7 @@ loadjs.ready(['style','firstPg'], function () {
 	let observer = new IntersectionObserver(function(e){
 		if(e[0].isIntersecting) {
 			console.log('I can see the end')
-			// addFew() // :-)
+			// addFew(2) // :-)
 		}//fi
 	})// observer event
 	observer.observe(addEl)
@@ -51,13 +50,12 @@ loadjs.ready(['style','firstPg'], function () {
 
 loadjs.ready('core', function() {
 	$('#add').click(function() {
-		addFew()
+		addFew(2)
 	})
 })//ready
 
-function addFew() {
+function addFew(c) {// add N items
 	let $t = $('<div></div>')//detached
-	let c = 2 // add N items
 	while(c>0) {
 		$t = _addOne($t )
 		c--
@@ -74,7 +72,7 @@ function _addOne($t) {
 		console.log('the end')
 		return $t
 	}
-	let item =  $.extend({}, feed.items[cur++] ) // clone
+	let item =  $.extend({}, feed.items[cur++] ) // clone due to ts router
 	item.url = '/blog/' + item.url +'/'
 	item.image =  item.url + item.image
 	console.log(item.image)

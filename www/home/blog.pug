@@ -20,7 +20,7 @@ script.
 
 	loadjs.ready(['feed','binding'], function () {
 		console.log('sz', feed.items.length)
-		addFew()// init
+		addFew(2)// init
 		setTimeout(function(){
 			loadjs.done('firstPg')
 		},1000/60)
@@ -32,7 +32,7 @@ script.
 		let observer = new IntersectionObserver(function(e){
 			if(e[0].isIntersecting) {
 				console.log('I can see the end')
-				// addFew() // :-)
+				// addFew(2) // :-)
 			}//fi
 		})// observer event
 		observer.observe(addEl)
@@ -40,13 +40,12 @@ script.
 
 	loadjs.ready('core', function() {
 		$('#add').click(function() {
-			addFew()
+			addFew(2)
 		})
 	})//ready
 
-	function addFew() {
+	function addFew(c) {// add N items
 		let $t = $('<div></div>')//detached
-		let c = 2 // add N items
 		while(c>0) {
 			$t = _addOne($t )
 			c--

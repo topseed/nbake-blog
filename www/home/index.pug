@@ -4,8 +4,9 @@ extends /layout1/_layout
 block head
 	//static binding ex:
 	title #{title}
+
+block main
 	script.
-		let feed
 		loadjs.ready(['promise','fetch'], function () {// load data
 			fetch('/blog/items.json').then(function(resp) {
 				return resp.json()
@@ -16,7 +17,6 @@ block head
 			})
 		})
 
-block main
 	p
 	br
 	p
