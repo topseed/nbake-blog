@@ -1,22 +1,32 @@
-// ts router generic //////////////////////////////////////////////////////////////////////////////
-loadjs.ready('site', function () {
+/* example use: 
+tsrouter.zone ='.pusher' //if div ID, use #pusher
+tsrouter.onNavigate(function(evt) {
+	if (evt.type == tsrouter.NAV)  { //navigation start
+		//$(tsrouter.zone).fadeTo(100,.2)
+	}
+	else if (evt.type == tsrouter.PAGE)  { //new page loaded
+		$(tsrouter.zone).html(evt.newContent)
+		//$(tsrouter.zone).fadeTo(100,1)
+	}
+})
+*/
 
-	console.log('ts router', "v3.05.01")
+$(document).ready(function () {
 
 	$(window).on('popstate', function(e) {//back/forward button
 		console.log('tsrouter popstate'+e.originalEvent.state)
-		let state = e.originalEvent.state
+		var state = e.originalEvent.state
 		if (state !== null) {
 			e.preventDefault()
-			let oldUrl = localStorage.getItem('oldUrl')
+			var oldUrl = localStorage.getItem('oldUrl');
 			localStorage.setItem('oldUrl', state.url)
 			tsrouter.loadHtml(state.url, oldUrl, true)
 		}
 	})
 
 	$(document).on('click', 'a', function(e) { //override links
-		let anchor = $(e.currentTarget)
-		let href = anchor.prop('href')
+		var anchor = $(e.currentTarget)
+		var href = anchor.prop('href')
 		if (! href || href.length < 1) {
 			return
 		}
@@ -25,22 +35,23 @@ loadjs.ready('site', function () {
 		if (tsrouter.isExternal(href)) {
 			return
 		}
-
-		//else:
+		//if (href.indexOf('#')>-1) { //don't override link with #
+		//	return
+		//}
 		e.preventDefault()
-		let fromHref = window.location.href
+		var fromHref = window.location.href
 		localStorage.setItem('oldUrl', href)
 		tsrouter.loadHtml(href, fromHref)
 	})
 
-	let pg = window.location.href
+	var pg = window.location.href
 	history.pushState({url: pg}, '', pg)
 	localStorage.setItem('oldUrl', pg)
 })
 
-let tsrouter = {
-
-	zone: '#ss' //the content in your layout. The rest should be app shell from PWA.
+var tsrouter = { 
+	
+	zone: '.pusher' //the content in your layout. The rest should be app shell from PWA.
 	, NAV : '_navigation-start'
 	, PAGE : '_newpage-loaded'
 	, navigated: new signals.Signal()
@@ -50,16 +61,16 @@ let tsrouter = {
 	}
 
 	, loadHtml: function(toHref, fromHref, back) { //triggered, but function can be called directly also
-		console.log('loaded', toHref)
+		console.log('loaded', toHref, back)
 		if (!back) {
-			history.pushState({url: toHref}, '', toHref)
+			history.pushState({url: toHref}, '', toHref) 
 		}
 
 		//fire NAV event
 		tsrouter.navigated.dispatch( {type:tsrouter.NAV, toHref:toHref, fromHref:fromHref, back:back} )
 
-		let url = tsrouter.appendQueryString(toHref, {'tsrouter': "\""+tsrouter.zone+"\""} )
-		console.log(url)
+		var url = tsrouter.appendQueryString(toHref, {'tsrouter': "\""+tsrouter.zone+"\""} )
+		//console.log(url)
 		fetch(url, {
 				method: 'get',
 				credentials: 'same-origin'
@@ -71,15 +82,14 @@ let tsrouter = {
 				}
 				return response.text()
 			}).then(function(txt) {
-				let $html = $( '<html></html>' ).append( $(txt) )
-				let title = $html.find('title').first().text()
+				var html = $( '<html></html>' ).append( $(txt) )
+				var title = html.find('title').first().text()
 				document.title = title
 
-				let newContent = $html.find(tsrouter.zone).html()
-				//console.log(newContent)
-
+				var newContent = html.find(tsrouter.zone).html()
+				
 				//fire new PAGE received event
-				tsrouter.navigated.dispatch( {type:tsrouter.PAGE, toHref:toHref, fromHref:fromHref, newContent:newContent, $html:$html, back:back} )
+				tsrouter.navigated.dispatch( {type:tsrouter.PAGE, toHref:toHref, fromHref:fromHref, newContent:newContent, html:html, back:back} )
 
 			}).catch(function(er) {
 				console.log(er)
@@ -88,7 +98,7 @@ let tsrouter = {
 	}
 
 	, isExternal: function(url) {// copied from original SS
-		let match = url.match(/^([^:\/?#]+:)?(?:\/\/([^\/?#]*))?([^?#]+)?(\?[^#]*)?(#.*)?/)
+		var match = url.match(/^([^:\/?#]+:)?(?:\/\/([^\/?#]*))?([^?#]+)?(\?[^#]*)?(#.*)?/)
 		if (typeof match[1] === 'string' && match[1].length > 0 && match[1].toLowerCase() !== window.location.protocol) {
 			return true
 		}
@@ -101,34 +111,23 @@ let tsrouter = {
 		return false
 	}
 
-	, appendQueryString:function (url, queryVars) {
-		let firstSeparator = (url.indexOf('?')==-1 ? '?' : '&')
-		let queryStringParts = new Array()
-		for(let key in queryVars) {
-			queryStringParts.push(key + '=' + queryVars[key])
+	,appendQueryString:function (url, queryVars) {
+		var firstSeparator = (url.indexOf('?')==-1 ? '?' : '&');
+		var queryStringParts = new Array();
+		for(var key in queryVars) {
+			queryStringParts.push(key + '=' + queryVars[key]);
 		}
-		let queryString = queryStringParts.join('&')
+		var queryString = queryStringParts.join('&');
 		return url + firstSeparator + queryString;
 	}
 }
 
-// /////////////////////////////////////////////////////////////////////////////////////
+window.addEventListener('pageshow', function(event) {
+	//console.log('pageshow:', event.timeStamp)
+	loadjs.done('pageshow')
+})
 
-//  use:
-
-loadjs.ready('site', function(){
-	console.log('setup tsr')
-	tsrouter.zone = '.pusher'
-	tsrouter.onNavigate(function(evt) {
-		if (evt.type == tsrouter.NAV)  { //start
-			console.log('tsrouter NAV')
-			//$('#content-wrapper').fadeTo(100,.2)
-		}
-		else if (evt.type == tsrouter.PAGE)  {
-			console.log('tsrouter PAGE')
-			$(tsrouter.zone).html(evt.newContent)
-			//$('#content-wrapper').fadeTo(100,1)
-			window.scrollTo(0, 0)
-		}
-	})
+window.addEventListener('load', function(event) {
+	//console.log('load:', event.timeStamp)
+	loadjs.done('norouter')
 })

@@ -1,30 +1,52 @@
-extends /layout1/_layout
-//- App Shell
+extends /plugin/_layout
 
 block head
-	//static binding ex:
 	title #{title}
 
 block main
+	include /plugin/_menu
+	.ui.container
+		.ui.segments
+			.ui.segment
+				p
+				#cards.ui.three.column.stackable.grid
+
 	script.
-		loadjs.ready(['promise','fetch'], function () {// load data
+		var feed
+		window.onhashchange = function(event) { //menu links change hash
+			var tag = location.href.split('#')[1]; //hash or null
+			render(tag) 
+		}
+		function render(tag){
+			var data = Object.assign({}, feed) //work on copy
+			if (tag) {
+				data.items = data.items.filter(function(item){
+					if (!item.tags) return false;
+					return (item.tags.filter(function(t){ return tag.split(',').indexOf(t) > -1 })).length > 0
+				})
+			}
+			$('#cards').html(itemsDBind(data)); 
+			//itemsDBind is function in /blog/items_d.js, great Pug dynamic binding feature
+		}
+		loadjs.ready(['core'], function () {// load data
 			fetch('/blog/items.json').then(function(resp) {
 				return resp.json()
 			}).then(function(json) {
 				feed = json
-				console.log('ready', Date.now()-_start)
-				loadjs.done('feed')
+				loadjs.ready(['dbind-home','site'], function() {
+					console.log('dbind-home ready')
+					var tag = location.href.split('#')[1];
+					render(tag) //first time, or after nav
+				})
 			})
 		})
-
-	p
-	br
-	p
-	.ui.text.container
-		include blog
-
-	script.
-		loadjs.ready('style', function () {
-			console.log('page 1 script here')
+		loadjs.ready('core', function() {
+			if (!loadjs.isDefined('dbind-home')) //need this for tsrouter.js
+			{
+				loadjs([
+					'/home/items_d.js'
+				],'dbind-home', {async: false})
+			}
+			else
+				loadjs.done('dbind-home')
 		})
-

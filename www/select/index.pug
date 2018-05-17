@@ -1,10 +1,10 @@
-extends /layout2/_layout
+extends /plugin/_layout
 
 block head
 	title #{title}
 
 block main
-	include /layout2/dropdown/_menu
+	include /plugin/dropdown/_menu
 	.ui.container
 		.ui.segments
 			.ui.segment
@@ -13,10 +13,10 @@ block main
 
 	script.
 		var feed
-		window.onhashchange = function(event) {
+		window.onhashchange = function(event) { 
 			var tag = location.href.split('#')[1]; //hash or null
 			console.log('onhashchange called with tag'+tag)
-			render(tag)
+			render(tag) 
 		}
 		function render(tag){
 			var data = Object.assign({}, feed) //work on copy
@@ -26,7 +26,7 @@ block main
 					return (item.tags.filter(function(t){ return tag.split(',').indexOf(t) > -1 })).length > 0
 				})
 			}
-			$('#cards').html(itemsDBind(data));
+			$('#cards').html(itemsDBind(data)); 
 			//itemsDBind is function in /blog/items_d.js, great Pug dynamic binding feature
 		}
 		loadjs.ready(['core'], function () {// load data
